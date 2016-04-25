@@ -1,7 +1,7 @@
 {
   "name": "baats-pager",
-  "version": "0.1.1",
-  "main": "./lib/pager.js",
+  "version": "0.1.2",
+  "main": "./lib/baats-pager.js",
   "typescript": {
     "definition": "lib/baats-pager"
   },
