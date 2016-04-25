@@ -1,0 +1,16 @@
+.vscode/
+node_modules/
+scripts/
+src/
+typings/
+typings_custom/
+tests/
+.gitignore
+.npmignore
+tslint.json
+tsd.json
+tsconfig.json
+example/
+build/
+*.tgz
+
