@@ -55,7 +55,6 @@
 	var baats_pager_1 = __webpack_require__(159);
 	function getPProps1(state, updatePage) {
 	    return {
-	        showPages: 5,
 	        totalPages: 50,
 	        currentPage: state.currentPage,
 	        onPageChange: undefined
