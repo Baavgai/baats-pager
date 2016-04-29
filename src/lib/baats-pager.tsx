@@ -8,6 +8,7 @@ export interface IProps {
   showPages?: number;
   totalPages: number;
   currentPage: number;
+  itemCount?: number; // include if you want item count to show
   onPageChange(page: number): void;
 }
 
@@ -31,10 +32,10 @@ const NavName = (x: NavEnds) => {
 
 const NavSymbol = (x: NavEnds) => {
   switch (x) {
-    case NavEnds.First: return <span aria-hidden="true">&lsaquo; </span>;
-    case NavEnds.Prev: return <span aria-hidden="true">&laquo; </span>;
-    case NavEnds.Next: return <span aria-hidden="true">&raquo; </span>;
-    case NavEnds.Last: return <span aria-hidden="true">&rsaquo; </span>;
+    case NavEnds.First: return <span aria-hidden="true">&lsaquo;</span>;
+    case NavEnds.Prev: return <span aria-hidden="true">&laquo;</span>;
+    case NavEnds.Next: return <span aria-hidden="true">&raquo;</span>;
+    case NavEnds.Last: return <span aria-hidden="true">&rsaquo;</span>;
   }
 };
 
@@ -43,6 +44,11 @@ const EndBlock = (t: NavEnds, p: IProps) => {
   let value = getChangeNum(t, p);
   let onClick = value ? e => p.onPageChange(value) : undefined;
   return <li className={!!value ? "" : "disabled"}><a href="#" aria-label={NavName(t) } onClick={onClick}>{NavSymbol(t) }</a></li>;
+};
+
+const ItemsBlock = (n: number) => {
+  let s = `${n} item${n===1?"":"s"}`;
+  return <li className="disabled"><a href="#" aria-label={s}>{s}</a></li>;
 };
 
 
@@ -62,15 +68,19 @@ const Pages = (p: IProps) => {
 
 export class Pager extends React.Component<IProps, {}> {
   render() {
+    let first = this.props.hideFirstLast ? null : EndBlock(NavEnds.First, this.props); 
+    let last = this.props.hideFirstLast ? null : EndBlock(NavEnds.Last, this.props);
+    let itemCount = this.props.itemCount ? ItemsBlock(this.props.itemCount) : null; 
     return (
       <div>
         <nav>
           <ul className="pagination">
-            {EndBlock(NavEnds.First, this.props) }
+            {first}
             {EndBlock(NavEnds.Prev, this.props) }
             {Pages(this.props) }
             {EndBlock(NavEnds.Next, this.props) }
-            {EndBlock(NavEnds.Last, this.props) }
+            {last}
+            {itemCount}
             </ul>
           </nav>
         </div>

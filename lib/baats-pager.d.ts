@@ -4,6 +4,7 @@ export interface IProps {
     showPages?: number;
     totalPages: number;
     currentPage: number;
+    itemCount?: number;
     onPageChange(page: number): void;
 }
 export declare class Pager extends React.Component<IProps, {}> {

@@ -11,7 +11,7 @@
       "taskName": "vscode-install"
     },
     {
-      "taskName": "compile","isBuildCommand": true 
+      "taskName": "dist", "isBuildCommand": true
     },
     {
       "taskName": "lint", "isTestCommand": true

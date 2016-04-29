@@ -1,6 +1,6 @@
 {
   "name": "baats-pager",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "main": "./lib/baats-pager.js",
   "typescript": {
     "definition": "lib/baats-pager"
@@ -16,9 +16,14 @@
   },
   "scripts": {
     "vscode-install": "npm install",
-    "clean": "rimraf lib",
+    "clean": "rimraf ts_build && rimraf test && rimraf lib",
     "precompile": "npm run clean",
     "compile": "tsc",
+    "prebundle": "npm run compile",
+    "bundle": "webpack",
+    "predist": "npm run bundle",
+    "dist": "ncp ./src/test/resources ./test/ && ncp ./ts_build/lib ./lib",
+    "postdist": "echo \"done\"",
     "lint": "tslint \"src/**/*.ts\" \"src/**/*.tsx"
   },
   "dependencies": {
@@ -26,6 +31,8 @@
     "react-dom": "^0.14.7"
   },
   "devDependencies": {
-    "typescript": "^1.8.0"
+    "ncp": "^2.0.0",
+    "typescript": "^1.8.0",
+    "webpack": "^1.13.0"
   }
 }
