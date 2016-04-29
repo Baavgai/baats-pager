@@ -19715,6 +19715,7 @@
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
 	var React = __webpack_require__(1);
+	var SHOW_PAGES_DEFAULT = 5;
 	var NavEnds;
 	(function (NavEnds) {
 	    NavEnds[NavEnds["First"] = 0] = "First";
@@ -19797,7 +19798,7 @@
 	}
 	exports.getItemRange = getItemRange;
 	function getPageRange(p) {
-	    return getItemRange(p.showPages, p.totalPages, p.currentPage);
+	    return getItemRange(p.showPages || SHOW_PAGES_DEFAULT, p.totalPages, p.currentPage);
 	}
 	exports.getPageRange = getPageRange;
 	//# sourceMappingURL=baats-pager.js.map

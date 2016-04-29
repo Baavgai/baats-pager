@@ -18,6 +18,9 @@ interface IPageProps {
 }
 
 
+const SHOW_PAGES_DEFAULT = 5;
+
+
 enum NavEnds { First, Prev, Next, Last };
 
 const NavName = (x: NavEnds) => {
@@ -112,5 +115,6 @@ export function getItemRange(pageSize: number, totalItems: number, itemNum: numb
 
 
 export function getPageRange(p: IProps) {
-  return getItemRange(p.showPages, p.totalPages, p.currentPage);
+  return getItemRange(p.showPages || SHOW_PAGES_DEFAULT, p.totalPages, p.currentPage);
 } 
+
