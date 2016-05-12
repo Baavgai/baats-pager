@@ -1,10 +1,13 @@
 import * as React from 'react';
 export interface IProps {
-    hideFirstLast?: boolean;
-    showPages?: number;
     totalPages: number;
     currentPage: number;
+    autoCollapse?: boolean;
+    hideFirstLast?: boolean;
+    showPages?: number;
     itemCount?: number;
+    pagerClassName?: string;
+    pagerStyle?: any;
     onPageChange(page: number): void;
 }
 export declare class Pager extends React.Component<IProps, {}> {

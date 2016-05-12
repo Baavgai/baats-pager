@@ -55,27 +55,55 @@
 	var baats_pager_1 = __webpack_require__(159);
 	function getPProps1(state, updatePage) {
 	    return {
-	        totalPages: 50,
+	        name: "Basic",
+	        totalPages: state.totalPages,
 	        currentPage: state.currentPage,
 	        onPageChange: undefined
 	    };
 	}
 	function getPProps2(state, updatePage) {
 	    var x = getPProps1(state, updatePage);
-	    x.itemCount = 77;
-	    return x;
-	}
-	function getPProps3(state, updatePage) {
-	    var x = getPProps2(state, updatePage);
+	    x.name = "Hide First Last";
 	    x.hideFirstLast = true;
 	    return x;
 	}
+	function getPProps3(state, updatePage) {
+	    var x = getPProps1(state, updatePage);
+	    x.name = "Item Count";
+	    x.itemCount = state.totalPages * 20;
+	    return x;
+	}
+	function getPProps4(state, updatePage) {
+	    var x = getPProps1(state, updatePage);
+	    x.name = "Auto Collapse";
+	    x.autoCollapse = true;
+	    return x;
+	}
+	function getPProps5(state, updatePage) {
+	    var x = getPProps3(state, updatePage);
+	    x.name = "Auto Collapse Items";
+	    x.autoCollapse = true;
+	    return x;
+	}
+	var PageCount = function (values, selected, onChange) {
+	    return React.createElement("select", {className: "form-control", defaultValue: values.indexOf(selected), onChange: function (e) { return onChange(values[e.currentTarget.value]); }}, values.map(function (x, i) { return React.createElement("option", {value: i}, x); }));
+	};
+	var PAGE_COUNT_VALUES = [1, 2, 3, 4, 5, 6, 7, 8, 10, 16, 25, 50, 75, 100];
 	var App = (function (_super) {
 	    __extends(App, _super);
 	    function App(p) {
 	        _super.call(this, p);
-	        this.state = { currentPage: 1 };
+	        this.state = { currentPage: 1, totalPages: 50 };
 	    }
+	    App.prototype.updatePageCount = function (n) {
+	        this.setState(function (s, p) {
+	            s.totalPages = n;
+	            if (s.currentPage > n) {
+	                s.currentPage = n;
+	            }
+	            return s;
+	        });
+	    };
 	    App.prototype.updatePage = function (page) {
 	        this.setState(function (s, p) {
 	            s.currentPage = page;
@@ -84,14 +112,14 @@
 	    };
 	    App.prototype.render = function () {
 	        var _this = this;
-	        var pagers = [getPProps1, getPProps2, getPProps3]
+	        var pagers = [getPProps1, getPProps2, getPProps3, getPProps4, getPProps5]
 	            .map(function (getPp, i) {
 	            var props = getPp(_this.state, _this.updatePage);
 	            props.onPageChange = function (x) { return _this.updatePage(x); };
 	            var pager = React.createElement(baats_pager_1.Pager, props);
-	            return React.createElement("div", {key: i, className: "row"}, pager);
+	            return React.createElement("div", {key: i, className: "row"}, React.createElement("div", {className: "col-xs-2"}, React.createElement("div", {className: "pagination row pull-right"}, props.name)), React.createElement("div", {className: "col-xs-10"}, pager));
 	        });
-	        return React.createElement("div", {className: "container"}, React.createElement("div", {className: "row"}, React.createElement("h1", null, "Page Test")), React.createElement("div", {className: "row"}, "Page: ", this.state.currentPage), React.createElement("div", {className: "row"}), pagers);
+	        return React.createElement("div", {className: "container"}, React.createElement("div", {className: "row"}, React.createElement("h1", null, "Page Test")), React.createElement("div", {className: "row"}), React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-xs-2"}, PageCount(PAGE_COUNT_VALUES, this.state.totalPages, function (x) { return _this.updatePageCount(x); })), React.createElement("div", {className: "col-xs-10"}, "Page: ", this.state.currentPage)), React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-xs-offset-2 col-xs-10"}, pagers)));
 	    };
 	    return App;
 	}(React.Component));
@@ -19766,14 +19794,31 @@
 	        _super.apply(this, arguments);
 	    }
 	    Pager.prototype.render = function () {
-	        var first = this.props.hideFirstLast ? null : EndBlock(NavEnds.First, this.props);
-	        var last = this.props.hideFirstLast ? null : EndBlock(NavEnds.Last, this.props);
+	        var _this = this;
+	        var ht = function (t) { return isHidden(t, _this.props) ? null : EndBlock(t, _this.props); };
 	        var itemCount = this.props.itemCount ? ItemsBlock(this.props.itemCount) : null;
-	        return (React.createElement("div", null, React.createElement("nav", null, React.createElement("ul", {className: "pagination"}, first, EndBlock(NavEnds.Prev, this.props), Pages(this.props), EndBlock(NavEnds.Next, this.props), last, itemCount))));
+	        var pages = Pages(this.props);
+	        if (pages.length === 1 && this.props.autoCollapse && this.props.currentPage === 1 && this.props.itemCount) {
+	            pages = null;
+	        }
+	        return (React.createElement("ul", {className: "pagination " + this.props.pagerClassName, style: this.props.pagerStyle}, ht(NavEnds.First), ht(NavEnds.Prev), pages, ht(NavEnds.Next), ht(NavEnds.Last), itemCount));
 	    };
 	    return Pager;
 	}(React.Component));
 	exports.Pager = Pager;
+	function isHidden(t, p) {
+	    if ((t === NavEnds.First || t === NavEnds.Last) && p.hideFirstLast) {
+	        return true;
+	    }
+	    else if (p.autoCollapse && getChangeNum(t, p)) {
+	        var _a = getPageRange(p), first = _a[0], last = _a[1];
+	        return (first === 1 && last === p.totalPages);
+	    }
+	    else if (p.autoCollapse) {
+	        return true;
+	    }
+	    return false;
+	}
 	function getChangeNum(t, p) {
 	    if (t === NavEnds.First && (p.currentPage !== 1)) {
 	        return 1;

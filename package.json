@@ -1,6 +1,6 @@
 {
   "name": "baats-pager",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "./lib/baats-pager.js",
   "typescript": {
     "definition": "lib/baats-pager"
@@ -22,7 +22,7 @@
     "prebundle": "npm run compile",
     "bundle": "webpack",
     "predist": "npm run bundle",
-    "dist": "ncp ./src/test/resources ./test/ && ncp ./ts_build/lib ./lib",
+    "dist": "ncp ./ts_build/lib ./lib && ncp ./src/test/resources ./test/",
     "postdist": "echo \"done\"",
     "lint": "tslint \"src/**/*.ts\" \"src/**/*.tsx"
   },

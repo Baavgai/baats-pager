@@ -4,11 +4,15 @@ import * as React from 'react';
 // currentPage is one based
 // because flip flopping sucks
 export interface IProps {
-  hideFirstLast?: boolean;
-  showPages?: number;
   totalPages: number;
   currentPage: number;
+  autoCollapse?: boolean;
+  hideFirstLast?: boolean;
+  showPages?: number;
   itemCount?: number; // include if you want item count to show
+  pagerClassName?: string;
+  pagerStyle?: any; // React.CSSProperties;
+  
   onPageChange(page: number): void;
 }
 
@@ -19,7 +23,6 @@ interface IPageProps {
 
 
 const SHOW_PAGES_DEFAULT = 5;
-
 
 enum NavEnds { First, Prev, Next, Last };
 
@@ -71,25 +74,36 @@ const Pages = (p: IProps) => {
 
 export class Pager extends React.Component<IProps, {}> {
   render() {
-    let first = this.props.hideFirstLast ? null : EndBlock(NavEnds.First, this.props); 
-    let last = this.props.hideFirstLast ? null : EndBlock(NavEnds.Last, this.props);
-    let itemCount = this.props.itemCount ? ItemsBlock(this.props.itemCount) : null; 
+    let ht = (t: NavEnds) => isHidden(t, this.props) ? null : EndBlock(t, this.props);
+    let itemCount = this.props.itemCount ? ItemsBlock(this.props.itemCount) : null;
+    let pages = Pages(this.props);
+    if (pages.length===1 && this.props.autoCollapse && this.props.currentPage===1 && this.props.itemCount) { pages = null; } 
     return (
-      <div>
-        <nav>
-          <ul className="pagination">
-            {first}
-            {EndBlock(NavEnds.Prev, this.props) }
-            {Pages(this.props) }
-            {EndBlock(NavEnds.Next, this.props) }
-            {last}
-            {itemCount}
-            </ul>
-          </nav>
-        </div>
+      <ul className={`pagination ${this.props.pagerClassName}`} style={this.props.pagerStyle}>
+        {ht(NavEnds.First)}
+        {ht(NavEnds.Prev)}
+        {pages}
+        {ht(NavEnds.Next)}
+        {ht(NavEnds.Last)}
+        {itemCount}
+        </ul>
     );
   }
 }
+
+function isHidden(t: NavEnds, p: IProps) {
+  if ((t===NavEnds.First || t===NavEnds.Last) && p.hideFirstLast) {
+    return true;
+  } else if (p.autoCollapse && getChangeNum(t, p)) {
+    let [first, last] = getPageRange(p);
+    return (first===1 && last===p.totalPages);
+  } else if (p.autoCollapse) {
+    return true;
+  }
+  return false;
+  
+}
+
 
 function getChangeNum(t: NavEnds, p: IProps) : number {
   if (t === NavEnds.First && (p.currentPage !== 1)) {
