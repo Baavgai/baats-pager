@@ -50,6 +50,14 @@
 	    function __() { this.constructor = d; }
 	    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 	};
+	var __assign = (this && this.__assign) || Object.assign || function(t) {
+	    for (var s, i = 1, n = arguments.length; i < n; i++) {
+	        s = arguments[i];
+	        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+	            t[p] = s[p];
+	    }
+	    return t;
+	};
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(158);
 	var baats_pager_1 = __webpack_require__(159);
@@ -116,8 +124,7 @@
 	            .map(function (getPp, i) {
 	            var props = getPp(_this.state, _this.updatePage);
 	            props.onPageChange = function (x) { return _this.updatePage(x); };
-	            var pager = React.createElement(baats_pager_1.Pager, props);
-	            return React.createElement("div", {key: i, className: "row"}, React.createElement("div", {className: "col-xs-2"}, React.createElement("div", {className: "pagination row pull-right"}, props.name)), React.createElement("div", {className: "col-xs-10"}, pager));
+	            return (React.createElement("div", {key: i, className: "row"}, React.createElement("div", {className: "col-xs-2"}, React.createElement("div", {className: "pagination row pull-right"}, props.name)), React.createElement("div", {className: "col-xs-10"}, React.createElement(baats_pager_1.Pager, __assign({}, props)))));
 	        });
 	        return React.createElement("div", {className: "container"}, React.createElement("div", {className: "row"}, React.createElement("h1", null, "Page Test")), React.createElement("div", {className: "row"}), React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-xs-2"}, PageCount(PAGE_COUNT_VALUES, this.state.totalPages, function (x) { return _this.updatePageCount(x); })), React.createElement("div", {className: "col-xs-10"}, "Page: ", this.state.currentPage)), React.createElement("div", {className: "row"}, React.createElement("div", {className: "col-xs-offset-2 col-xs-10"}, pagers)));
 	    };
@@ -19794,14 +19801,14 @@
 	        _super.apply(this, arguments);
 	    }
 	    Pager.prototype.render = function () {
-	        var _this = this;
-	        var ht = function (t) { return isHidden(t, _this.props) ? null : EndBlock(t, _this.props); };
-	        var itemCount = this.props.itemCount ? ItemsBlock(this.props.itemCount) : null;
-	        var pages = Pages(this.props);
-	        if (pages.length === 1 && this.props.autoCollapse && this.props.currentPage === 1 && this.props.itemCount) {
+	        var p = this.props;
+	        var ht = function (t) { return isHidden(t, p) ? null : EndBlock(t, p); };
+	        var itemCount = p.itemCount ? ItemsBlock(p.itemCount) : null;
+	        var pages = Pages(p);
+	        if (pages.length === 1 && p.autoCollapse && p.currentPage === 1 && p.itemCount) {
 	            pages = null;
 	        }
-	        return (React.createElement("ul", {className: "pagination " + this.props.pagerClassName, style: this.props.pagerStyle}, ht(NavEnds.First), ht(NavEnds.Prev), pages, ht(NavEnds.Next), ht(NavEnds.Last), itemCount));
+	        return (React.createElement("ul", {className: "pagination " + p.pagerClassName, style: p.pagerStyle}, ht(NavEnds.First), ht(NavEnds.Prev), pages, ht(NavEnds.Next), ht(NavEnds.Last), itemCount));
 	    };
 	    return Pager;
 	}(React.Component));

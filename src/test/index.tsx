@@ -87,13 +87,14 @@ export class App extends React.Component<{}, IAppState> {
       .map((getPp, i) => {
         let props = getPp(this.state, this.updatePage);
         props.onPageChange = (x) => this.updatePage(x);
-        let pager = React.createElement(Pager, props);
-        return <div key={i} className="row">
-          <div className="col-xs-2">
-            <div className="pagination row pull-right">{props.name}</div>
+        return (
+          <div key={i} className="row">
+            <div className="col-xs-2">
+              <div className="pagination row pull-right">{props.name}</div>
+            </div>
+            <div className="col-xs-10"><Pager {...props} /></div>
           </div>
-          <div className="col-xs-10">{pager}</div>
-        </div>;
+        );
       });
     return <div className="container">
         <div className="row"><h1>Page Test</h1></div>

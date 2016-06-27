@@ -72,14 +72,15 @@ const Pages = (p: IProps) => {
   return xs;
 };
 
-export class Pager extends React.Component<IProps, {}> {
+export class Pager extends React.Component<any & IProps, {}> {
   render() {
-    let ht = (t: NavEnds) => isHidden(t, this.props) ? null : EndBlock(t, this.props);
-    let itemCount = this.props.itemCount ? ItemsBlock(this.props.itemCount) : null;
-    let pages = Pages(this.props);
-    if (pages.length===1 && this.props.autoCollapse && this.props.currentPage===1 && this.props.itemCount) { pages = null; } 
+    let p = this.props as IProps;
+    let ht = (t: NavEnds) => isHidden(t, p) ? null : EndBlock(t, p);
+    let itemCount = p.itemCount ? ItemsBlock(p.itemCount) : null;
+    let pages = Pages(p);
+    if (pages.length===1 && p.autoCollapse && p.currentPage===1 && p.itemCount) { pages = null; } 
     return (
-      <ul className={`pagination ${this.props.pagerClassName}`} style={this.props.pagerStyle}>
+      <ul className={`pagination ${p.pagerClassName}`} style={p.pagerStyle}>
         {ht(NavEnds.First)}
         {ht(NavEnds.Prev)}
         {pages}

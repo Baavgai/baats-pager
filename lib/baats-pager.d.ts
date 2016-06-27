@@ -10,7 +10,7 @@ export interface IProps {
     pagerStyle?: any;
     onPageChange(page: number): void;
 }
-export declare class Pager extends React.Component<IProps, {}> {
+export declare class Pager extends React.Component<any & IProps, {}> {
     render(): JSX.Element;
 }
 export declare function getItemRange(pageSize: number, totalItems: number, itemNum: number): [number, number];
