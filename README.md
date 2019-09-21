@@ -3,3 +3,5 @@
 React paging component written in TypeScript
 
 Added autoCollapse to props and demo.  Much nicer.
+
+Moved to newer tooling.

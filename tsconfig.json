@@ -1,20 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2015",
     "module": "commonjs",
-    "noImplicitAny": false,
-    "outDir": "ts_build",
-    "moduleResolution": "node",
-    "isolatedModules": false,
     "jsx": "react",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "removeComments": true,
+    "moduleResolution": "node",
+    "outDir": "lib",
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "importHelpers": true,
+    "strictNullChecks": true,
     "noLib": false,
-    "preserveConstEnums": true,
-    "suppressImplicitAnyIndexErrors": true,
     "sourceMap": true,
     "declaration": true
   },
-  "exclude": [ "node_modules", "hold" ]
+  "include": [
+    "src"
+  ]    
 }

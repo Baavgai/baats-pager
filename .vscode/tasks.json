@@ -1,20 +1,24 @@
 {
-  "version": "0.1.0",
-  "command": "npm",
-  "args": [
-    "run"
-  ],
-  "isShellCommand": true,
-  "showOutput": "always",
-  "tasks": [
-    {
-      "taskName": "vscode-install"
-    },
-    {
-      "taskName": "dist", "isBuildCommand": true
-    },
-    {
-      "taskName": "lint", "isTestCommand": true
-    }
-  ]
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "npm",
+            "script": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "npm",
+            "script": "test",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        }
+
+    ]
 }
