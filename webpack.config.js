@@ -6,13 +6,12 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 module.exports = {
     mode: 'development',
-    entry: './src/baats_pager.tsx',
+    entry: './src/index.ts',
     output: {
-        filename: 'baats_pager.js',
-        path: path.resolve(__dirname, 'lib'),
-        libraryTarget: 'umd',
-        library: 'baats',
-        umdNamedDefine: true
+        filename: 'index.js',
+        path: path.resolve(__dirname, 'dist'),
+        library: '',
+        libraryTarget: 'commonjs',
     },
     module: {
         rules: [
@@ -34,20 +33,6 @@ module.exports = {
         },
         plugins: []
     },
-    plugins: [],
-    externals: {
-        react: {
-            commonjs: "react",
-            commonjs2: "react",
-            amd: "React",
-            root: "React"
-        },
-        "react-dom": {
-            commonjs: "react-dom",
-            commonjs2: "react-dom",
-            amd: "ReactDOM",
-            root: "ReactDOM"
-        }
-    }
+    plugins: []
 };
 

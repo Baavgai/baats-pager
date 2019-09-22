@@ -1,11 +1,9 @@
 {
   "name": "baats-pager",
-  "version": "0.2.0",
-  "main": "./lib/baats-pager.js",
-  "typescript": {
-    "definition": "lib/baats-pager"
-  },
-  "typings": "lib/baats-pager",
+  "version": "0.2.3",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [ "/dist"],
   "author": {
     "name": "baavgai",
     "email": "baavgai@chaingang.org"
@@ -16,12 +14,14 @@
   },
   "scripts": {
     "test": "npm run tsc",
-    "clean": "shx rm -rf lib",
+    "clean": "shx rm -rf lib dist *.tgz",
     "prebuild": "npm run clean",
     "build": "webpack",
+    "postbuild": "npm pack",
     "lint": "tslint src/**/*.{ts,tsx} -t verbose --force",
     "tsc": "./node_modules/.bin/tsc",
-    "tsc:watch": "./node_modules/.bin/tsc --watch"
+    "tsc:watch": "./node_modules/.bin/tsc --watch",
+    "foo": "tar -txvf '"
   },
   "devDependencies": {
     "@types/react": "^16.9.2",
