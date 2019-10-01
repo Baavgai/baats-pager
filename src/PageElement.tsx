@@ -1,7 +1,7 @@
 import * as React from "react";
-
 import { PageLink } from "./PageLink";
 import { NavEndProps, NavEnds } from "./types";
+import { isHidden, getChangeNum } from "./functions";
 
 const NavSymbol = ({ navEnd }: NavEndProps) => {
     switch (navEnd) {
@@ -28,6 +28,7 @@ export const PageElement = (p: NavEndProps) => {
     }
 };
 
+/*
 function isHidden(p: NavEndProps) {
     const t = p.navEnd;
     if ((t === NavEnds.First || t === NavEnds.Last) && p.hideFirstLast) {
@@ -74,3 +75,4 @@ const navName = (x: NavEnds) => {
     }
 };
 */
+

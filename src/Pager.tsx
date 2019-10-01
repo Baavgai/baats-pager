@@ -1,40 +1,33 @@
 import * as React from "react";
-
-import { PagerProps } from "./types";
+import { itemsSlug, toPagerComponentProps } from "./functions";
+import { PagerProps, NavEnds, PagerComponentProps } from "./types";
 import { PageElement } from "./PageElement";
 import { Pages } from "./Pages";
-import { NavEnds, PagerComponentProps } from "./types";
 
-const SHOW_PAGES_DEFAULT = 5;
-
-function getItemRange(pageSize: number, totalItems: number, itemNum: number) {
-    const row = Math.floor((itemNum - 1) / pageSize);
-    const firstPage = (row * pageSize) + 1;
-    const lastPage = Math.min(totalItems, firstPage + pageSize - 1);
-    return { firstPage, lastPage };
-}
-
-const getPageRange = (p: PagerProps) =>
-    getItemRange(p.showPages || SHOW_PAGES_DEFAULT, p.totalPages, p.currentPage);
-
-const ItemsBlock = ({ itemCount }: PagerProps) => {
-    if (itemCount === undefined) {
+const ItemsBlock = (p: PagerComponentProps) => {
+    if (!p.showCount) {
         return <></>;
     } else {
-        const s = `${itemCount} item${itemCount === 1 ? "" : "s"}`;
-        return <li className="disabled"><a href="#" aria-label={s}>{s}</a></li>;
+        return <span>{itemsSlug(p)}</span>;
     }
 };
 
 const ViewComponent = (p: PagerComponentProps) =>
-    <ul className={`pagination ${p.pagerClassName}`} style={p.pagerStyle}>
-        <PageElement {...p} navEnd={NavEnds.First} />
-        <PageElement {...p} navEnd={NavEnds.Prev} />
-        <Pages {...p} />
-        <PageElement {...p} navEnd={NavEnds.Next} />
-        <PageElement {...p} navEnd={NavEnds.Last} />
-        <ItemsBlock {...p} />
-    </ul>;
+    <div className="row">
+        <div className="col">
+            <ul className={p.pagerClassName} style={p.pagerStyle}>
+                <PageElement {...p} navEnd={NavEnds.First} />
+                <PageElement {...p} navEnd={NavEnds.Prev} />
+                <Pages {...p} />
+                <PageElement {...p} navEnd={NavEnds.Next} />
+                <PageElement {...p} navEnd={NavEnds.Last} />
+            </ul>
+        </div>
+        <div className="col">
+            <ItemsBlock {...p} />
+        </div>
+        <div className="w-100"></div>
+    </div>;
 
 export const Pager = (p: PagerProps) =>
-    <ViewComponent {...{...p, ...getPageRange(p)}} />;
+    <ViewComponent {...toPagerComponentProps(p)} />;

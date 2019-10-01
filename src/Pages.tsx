@@ -1,7 +1,7 @@
 import * as React from "react";
-
 import { PageLink } from "./PageLink";
 import { PagerComponentProps } from "./types";
+import { range } from "./functions";
 
 const Page = (p: PagerComponentProps & { page: number }) =>
     (p.page === p.currentPage)
@@ -13,9 +13,8 @@ const Page = (p: PagerComponentProps & { page: number }) =>
         </li>
     ;
 
-const pageNums = ({ firstPage, lastPage }: PagerComponentProps) =>
-    // [1,2,3];
-    new Array<number>(lastPage - firstPage + 1)        .fill(0)        .map((_, i) => i + firstPage);
+const pageNums = ({ pageRange }: PagerComponentProps) =>
+    range(pageRange.last - pageRange.first + 1).map(i => i + pageRange.first);
 
 export const Pages = (p: PagerComponentProps) =>
     <>{pageNums(p).map((page, i) => <Page key={i} {...p} page={page} />)}</>;
